@@ -34,6 +34,7 @@ Task("Default")
 });
 
 Task("BuildApplication")
+   .IsDependentOn(BuildTasks.NugetRestoreCakeSessionApplication)
    .IsDependentOn(BuildTasks.BuildCakeSessionApplication);
 
 RunTarget(target);
