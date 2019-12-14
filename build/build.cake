@@ -1,6 +1,7 @@
 #load cake/build-tasks.cake
 #load cake/builddata.cake
 #load cake/test-tasks.cake
+#load cake/config-tasks.cake
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,7 +18,9 @@ Setup<Builddata>(ctx =>
 {
    return new Builddata()
    {
-      Configuration = Argument("configuration", "Release")
+      Configuration = Argument("configuration", "Release"),
+      ConfigInteger = Argument("configinteger", 0),
+      ConfigString = Argument("configstring", "String"),
    };
 });
 
@@ -42,5 +45,8 @@ Task("BuildApplication")
 
 Task("TestApplication")
    .IsDependentOn(TestTasks.TestCakeSessionApplication);
+
+Task("ReleaseApplication")
+   .IsDependentOn(ConfigTasks.SetConfigValues);
 
 RunTarget(target);
