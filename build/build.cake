@@ -1,3 +1,6 @@
+#load cake/build-tasks.cake
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,5 +32,8 @@ Task("Default")
 .Does(() => {
    Information("Hello Cake!");
 });
+
+Task("BuildApplication")
+   .IsDependentOn(BuildTasks.BuildCakeSessionApplication);
 
 RunTarget(target);
