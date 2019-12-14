@@ -1,5 +1,6 @@
 #load cake/build-tasks.cake
 #load cake/builddata.cake
+#load cake/test-tasks.cake
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,5 +39,8 @@ Task("Default")
 Task("BuildApplication")
    .IsDependentOn(BuildTasks.NugetRestoreCakeSessionApplication)
    .IsDependentOn(BuildTasks.BuildCakeSessionApplication);
+
+Task("TestApplication")
+   .IsDependentOn(TestTasks.TestCakeSessionApplication);
 
 RunTarget(target);
