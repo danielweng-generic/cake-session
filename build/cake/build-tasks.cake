@@ -1,4 +1,5 @@
 #load paths.cake
+#load builddata.cake
 
 public static class BuildTasks
 {
@@ -8,9 +9,15 @@ public static class BuildTasks
 }
 
 Task(BuildTasks.BuildCakeSessionApplication)
-    .Does(() =>
+    .Does<Builddata>(builddata =>
 {
-    MSBuild(CakeSessionApplicationSolution);
+    Information($"Building {CakeSessionApplicationSolution.GetFilename()}");
+    Information($"Configuration {builddata.Configuration}");
+
+    var buildsettings = GetBaseBuildSettings()
+        .SetConfiguration(builddata.Configuration);
+
+    MSBuild(solutionFile, buildsettings);
 });
 
 Task(BuildTasks.NugetRestoreCakeSessionApplication)
@@ -18,3 +25,10 @@ Task(BuildTasks.NugetRestoreCakeSessionApplication)
 {
     NuGetRestore(CakeSessionApplicationSolution);
 });
+
+private MSBuildSettings GetBaseBuildSettings()
+{
+    var buildsettings = new MSBuildSettings()
+        .SetVerbosity(Verbosity.Minimal);
+
+    return buildsettings;

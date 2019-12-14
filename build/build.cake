@@ -1,4 +1,5 @@
 #load cake/build-tasks.cake
+#load cake/builddata.cake
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -6,16 +7,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
-Setup(ctx =>
+Setup<Builddata>(ctx =>
 {
-   // Executed BEFORE the first task.
-   Information("Running tasks...");
+   return new Builddata()
+   {
+      Configuration = Argument("configuration", "Release")
+   };
 });
 
 Teardown(ctx =>
