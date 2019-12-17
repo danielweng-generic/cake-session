@@ -51,4 +51,38 @@ Task("TestApplication")
 Task("ReleaseApplication")
    .IsDependentOn(ConfigTasks.SetConfigValues);
 
+
+Task("Error-Abort-Build")
+   .Does(() => {
+      throw new Exception("Läuft nicht");
+   });
+
+Task("Error-Abort-Build-Continue")
+   .ContinueOnError()
+   .Does(() => {
+      throw new Exception("Läuft nicht");
+   });
+
+
+Task("Error-Abort-Build-Handle")
+   .Does(() => {
+      throw new Exception("Läuft nicht");
+   })
+   .OnError(ex => {
+      Information($"Exception: {ex.Message} was thrown!!!");
+   });
+
+// erst zum schluss wird gefailed. Alle Tasks werden aber durchlaufen.
+Task("Error-Abort-Build-Defer")
+   .Does(() => {
+      Information("Failing task 1");
+      throw new Exception("Läuft nicht");
+   })
+   .Does(() => {
+      Information("Failing task 2");
+      throw new Exception("Dat auch nicht!!");
+   })
+   .DeferOnError();
+
+
 RunTarget(target);
