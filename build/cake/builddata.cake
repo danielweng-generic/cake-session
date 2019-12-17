@@ -5,4 +5,8 @@ public class Builddata
     public string ConfigString { get; set; }
 
     public int ConfigInteger { get; set; }
+
+    public string VersionNumber { get; set; }
+
+
 }

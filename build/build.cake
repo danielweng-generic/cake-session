@@ -21,6 +21,7 @@ Setup<Builddata>(ctx =>
       Configuration = Argument("configuration", "Release"),
       ConfigInteger = Argument("configinteger", 0),
       ConfigString = Argument("configstring", "String"),
+      VersionNumber = Argument("versionnumber", "1.0.0.0")
    };
 });
 
@@ -40,6 +41,7 @@ Task("Default")
 });
 
 Task("BuildApplication")
+   .IsDependentOn(BuildTasks.SetVersionCakeSessionApplication)
    .IsDependentOn(BuildTasks.NugetRestoreCakeSessionApplication)
    .IsDependentOn(BuildTasks.BuildCakeSessionApplication);
 
