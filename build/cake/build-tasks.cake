@@ -17,7 +17,7 @@ Task(BuildTasks.BuildCakeSessionApplication)
     var buildsettings = GetBaseBuildSettings()
         .SetConfiguration(builddata.Configuration);
 
-    MSBuild(solutionFile, buildsettings);
+    MSBuild(CakeSessionApplicationSolution, buildsettings);
 });
 
 Task(BuildTasks.NugetRestoreCakeSessionApplication)
@@ -32,3 +32,4 @@ private MSBuildSettings GetBaseBuildSettings()
         .SetVerbosity(Verbosity.Minimal);
 
     return buildsettings;
+}
